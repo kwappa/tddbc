@@ -13,6 +13,11 @@ class Kvs
   end
 
   def dump
-    ''
+    dump_str = ''
+    @values.each do |k, v|
+      dump_str += "\n" unless dump_str.empty?
+      dump_str += "#{k}:#{v}"
+    end
+    dump_str
   end
 end

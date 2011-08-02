@@ -3,7 +3,7 @@ require 'rspec'
 require './kvs'
 
 describe Kvs do
-  before :all do
+  before do
     @kvs = Kvs.new
   end
 
@@ -32,8 +32,7 @@ describe Kvs do
 
     context 'after put one pair' do
       before do
-        pending
-        @kvs.put 'key1', 'value'
+        @kvs.put 'key1', 'value1'
       end
       subject { @kvs.dump }
       it { should == "key1:value1" }
