@@ -23,6 +23,15 @@ describe Kvs do
       subject { @kvs.put 'key1', nil }
       it { should be_nil }
     end
+
+    context 'given existing key' do
+      before do
+        @kvs.put 'key1', 'value1'
+        @kvs.put 'key2', 'value2'
+      end
+      subject { @kvs.put 'key1', 'new_value1' }
+      it { should == @kvs.get('key1') }
+    end
   end
 
   describe '#get' do
