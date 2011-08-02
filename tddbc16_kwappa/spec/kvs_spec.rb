@@ -84,4 +84,50 @@ describe Kvs do
       end
     end
   end
+
+  describe '#merge' do
+    before do
+      @kvs.put 'key1', 'value1'
+    end
+
+    context 'hash is given' do
+      before do
+        @kvs.merge( {'key2' => 'value2', 'key3' => 'value3' } )
+      end
+      specify do
+        {'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3' }.each do |k, v|
+          @kvs.get(k).should == v
+        end
+      end
+    end
+
+    context 'odd count array is given' do
+      specify do
+        expect { @kvs.merge([1, 2, 3]) }.to raise_error ArgumentError
+      end
+    end
+
+    context 'even count array is given' do
+      before do
+        @kvs.merge( ['key2', 'value2', 'key3', 'value3'] )
+      end
+      specify do
+        {'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3' }.each do |k, v|
+          @kvs.get(k).should == v
+        end
+      end
+    end
+
+    context 'odd count array is given' do
+      specify do
+        expect { @kvs.merge([1, 2, 3]) }.to raise_error ArgumentError
+      end
+    end
+
+    context 'none hash is given' do
+      specify do
+        expect { @kvs.merge("hogepiyo") }.to raise_error ArgumentError
+      end
+    end
+  end
 end

@@ -26,4 +26,17 @@ class Kvs
     raise KeyError if key.nil?
     @values.delete key
   end
+
+  def merge values
+    unless values.class == Hash
+      if values.class == Array && values.count % 2 == 0
+        values = Hash[*values]
+      else
+        raise ArgumentError
+      end
+    end
+    values.each do |k, v|
+      self.put k, v
+    end
+  end
 end
