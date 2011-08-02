@@ -11,3 +11,16 @@ describe '#put' do
     it { should == 'value1' }
   end
 end
+
+describe '#get' do
+  before do
+    @kvs = Kvs.new
+  end
+  context 'return value after put' do
+    before do
+      @kvs.put 'key1', 'value1'
+    end
+    subject { @kvs.get 'key1' }
+    it { should == 'value1' }
+  end
+end
