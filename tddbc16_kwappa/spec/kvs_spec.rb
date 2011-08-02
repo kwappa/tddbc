@@ -12,6 +12,17 @@ describe Kvs do
       subject { @kvs.put 'key1', 'value1' }
       it { should == 'value1' }
     end
+
+    context 'put nil key' do
+      specify do
+        expect { @kvs.put nil, 'value' }.to raise_error KeyError
+      end
+    end
+
+    context 'put nil value' do
+      subject { @kvs.put 'key1', nil }
+      it { should be_nil }
+    end
   end
 
   describe '#get' do

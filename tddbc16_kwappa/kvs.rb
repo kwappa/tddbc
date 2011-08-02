@@ -5,6 +5,7 @@ class Kvs
   end
 
   def put key, value
+    raise KeyError if key.nil?
     @values.store key, value
   end
 
