@@ -37,5 +37,14 @@ describe Kvs do
       subject { @kvs.dump }
       it { should == "key1:value1" }
     end
+
+    context 'after put two pairs' do
+      before do
+        @kvs.put 'key1', 'value1'
+        @kvs.put 'key2', 'value2'
+      end
+      subject { @kvs.dump }
+      it { should == "key1:value1\nkey2:value2" }
+    end
   end
 end
