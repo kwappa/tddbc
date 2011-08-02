@@ -65,4 +65,12 @@ describe Kvs do
       it { should == "key1:value1\nkey2:value2" }
     end
   end
+
+  describe '#delete' do
+    before do
+      @kvs.put 'key1', 'value1'
+    end
+    subject { @kvs.delete 'key1' }
+    it { should == 'value1' }
+  end
 end

@@ -22,4 +22,8 @@ class Kvs
     end
     dump_str
   end
+
+  def delete key
+    @values.delete key
+  end
 end
