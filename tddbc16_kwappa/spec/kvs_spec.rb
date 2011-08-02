@@ -36,7 +36,6 @@ describe Kvs do
 
     context 'not existing key was given' do
       specify do
-
         expect { @kvs.get 'invalid_key' }.to raise_error KeyError
       end
     end
@@ -70,7 +69,16 @@ describe Kvs do
     before do
       @kvs.put 'key1', 'value1'
     end
-    subject { @kvs.delete 'key1' }
-    it { should == 'value1' }
+
+    context 'existing key was given' do
+      subject { @kvs.delete 'key1' }
+      it { should == 'value1' }
+    end
+
+    context 'nil key was given' do
+      specify do
+        expect { @kvs.delete nil }.to raise_error KeyError
+      end
+    end
   end
 end

@@ -24,6 +24,7 @@ class Kvs
   end
 
   def delete key
+    raise KeyError if key.nil?
     @values.delete key
   end
 end
