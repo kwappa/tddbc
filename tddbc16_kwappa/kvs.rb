@@ -10,6 +10,7 @@ class Kvs
   end
 
   def get key
+    raise KeyError unless @values.include? key
     @values[key]
   end
 

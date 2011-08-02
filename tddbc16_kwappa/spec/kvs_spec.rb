@@ -33,6 +33,13 @@ describe Kvs do
       subject { @kvs.get 'key1' }
       it { should == 'value1' }
     end
+
+    context 'not existing key was given' do
+      specify do
+
+        expect { @kvs.get 'invalid_key' }.to raise_error KeyError
+      end
+    end
   end
 
   describe '#dump' do
