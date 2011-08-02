@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 class Kvs
+  def initialize
+    @values = Hash.new
+  end
+
   def put key, value
-    'value1'
+    @values.store key, value
   end
 
   def get key
-    'value1'
+    @values[key]
   end
 
   def dump

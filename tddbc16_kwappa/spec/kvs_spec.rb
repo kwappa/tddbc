@@ -32,6 +32,7 @@ describe Kvs do
 
     context 'after put one pair' do
       before do
+        pending
         @kvs.put 'key1', 'value'
       end
       subject { @kvs.dump }
