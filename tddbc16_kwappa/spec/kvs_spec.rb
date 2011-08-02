@@ -23,4 +23,12 @@ describe Kvs do
       it { should == 'value1' }
     end
   end
+
+  describe '#dump' do
+    context 'when empty' do
+      subject { @kvs.dump }
+      it { should == '' }
+    end
+  end
+
 end

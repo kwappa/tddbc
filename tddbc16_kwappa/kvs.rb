@@ -7,4 +7,8 @@ class Kvs
   def get key
     'value1'
   end
+
+  def dump
+    ''
+  end
 end
