@@ -1,0 +1,30 @@
+class Autotest
+  module Growl
+
+    IMG_OK = '~/.autotest_icons/pass.png'
+    IMG_NG = '~/.autotest_icons/fail.png'
+    IMG_PEND = '~/.autotest_icons/pending2.png'
+
+    def self.growl(title, msg, img, pri=0, sticky="")
+      system "growlnotify -p #{pri} -n autotest -m #{msg.inspect} -H localhost --image #{img} -title #{title} #{sticky}"
+    end
+
+    Autotest.add_hook :ran_command do |at|
+      output = at.results.last.chomp!
+
+      if output =~ /((?:\d+) examples?, (\d+) failures?(?:, (\d+) pendings?)?)/
+        if $2.to_i > 0
+          growl "Tests Failed", "#{$1}", IMG_NG, 2
+        else
+          if $3.to_i > 0
+            growl "Pending", "#{$1}", IMG_PEND, 1
+          else
+            growl "Tests Passed", "#{$1}", IMG_OK, -2
+          end
+        end
+      else
+      end
+    end
+  end
+
+end
