@@ -1,29 +1,42 @@
+/* -*- coding: utf-8 -*-  */
 var vows = require('vows'),
     assert = require('assert');
 
-var stack = require('./index.js');
+var stack = require('../lib/stack');
 
 vows.describe('stack').addBatch({
-    'empty': {
+    '空のとき': {
 	topic: new stack(),
-	'初期状態はempty': function (s) {
+	'初期状態は空': function (s) {
 	    assert.isTrue(s.isEmpty());
 	},
-	'emptyでのpopはエラー': function(s) {
+	'emptyでのpopは例外発生': function(s) {
 	    assert.throws(function() { s.pop(); }, RangeError);
 	},
     },
-    'push and pop': {
-	topic: new stack(),
-	'ひとつpush': function (s) {
+    '1つpush': {
+	topic: function() { 
+	    var s = new stack(); 
 	    s.push(1);
-	    assert.equal(s.top(), 1);
-	    assert.equal(s.size(), 1);
+	    return s;
 	},
-	'二つpush':function(s) {
+	'top pop': function (s) {
+	    assert.equal(s.size(), 1);
+	    assert.isFalse(s.isEmpty());
+
+	    assert.equal(s.top(), 1);
+	    assert.equal(s.pop(), 1);
+
+	    assert.equal(s.size(), 0);
+	    assert.isTrue(s.isEmpty());
+	},
+    },
+    '2つpush': {
+ 	topic: function(s) {
+	    var s = new stack();
+	    s.push(1);
 	    s.push(3);
-	    assert.equal(s.top(), 3);
-	    assert.equal(s.size(), 2);
+	    return s;
 	},
 	'pop 1つめ': function(s) {
 	    assert.equal(s.pop(), 3);
@@ -36,19 +49,19 @@ vows.describe('stack').addBatch({
 	    assert.isTrue(s.isEmpty());
 	}
     },
-    'stack overflow': {
+    'maxSize制限': {
 	topic: new stack(),
-	'スタック最大値は16': function(s) {
+	'スタック最大サイズは16': function(s) {
 	    assert.equal(s.maxSize(), 16);
 	},
-	'16個までならOK': function(s) {
+	'maxSizeまでならpushできる': function(s) {
 	    var i = 0;
-	    while (s.size() < 16) {
+	    while (s.size() < s.maxSize()) {
 		assert.doesNotThrow(function(){ s.push(i++); }, RangeError);
 	    }
-	    assert.equal(s.size(), 16);
 	},
-	'17個目は例外':	function(s){
+	'maxSize+1は例外': function(s){
+	    assert.equal(s.size(), s.maxSize());
 	    assert.throws(function(){ s.push(17); }, RangeError);
 	}
     },
