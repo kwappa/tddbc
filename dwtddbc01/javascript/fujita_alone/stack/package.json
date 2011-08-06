@@ -1,0 +1,21 @@
+{ "name": "stack"
+, "version": "0.1"
+, "description": "TDDBC #1 stack implementation"
+, "keywords":
+  [ "stack"
+  ]
+, "homepage": "http://github.com/kwappa/dwtddbc01"
+, "author": "FJT Seth"
+, "main": "index.js"
+, "repository":
+  { "type": "git"
+  , "url": "http://github.com/kwappa/dwtddbc01.git"
+  }
+, "dependencies":
+  { 
+  }
+, "files":
+  [ "package.json"
+  , "index.js"
+  ]
+}
