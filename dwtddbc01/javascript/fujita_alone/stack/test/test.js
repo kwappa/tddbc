@@ -5,48 +5,54 @@ var vows = require('vows'),
 var stack = require('../lib/stack');
 
 vows.describe('stack').addBatch({
-    '空のとき': {
+    '初期状態の時': {
 	topic: new stack(),
 	'初期状態は空': function (s) {
 	    assert.isTrue(s.isEmpty());
 	},
-	'emptyでのpopは例外発生': function(s) {
+	'空でのpopは例外発生': function(s) {
 	    assert.throws(function() { s.pop(); }, RangeError);
 	},
     },
-    '1つpush': {
+    '1つpushされた状態で': {
 	topic: function() { 
 	    var s = new stack(); 
 	    s.push(1);
 	    return s;
 	},
-	'top pop': function (s) {
+	'topとpopは同じ結果': function (s) {
 	    assert.equal(s.size(), 1);
 	    assert.isFalse(s.isEmpty());
 
 	    assert.equal(s.top(), 1);
-	    assert.equal(s.pop(), 1);
+	    assert.equal(s.top(), s.pop());
 
 	    assert.equal(s.size(), 0);
 	    assert.isTrue(s.isEmpty());
 	},
+	'2つめpopは例外発生': function (s) {
+	    assert.throws(function () { s.pop(); }, RangeError);
+	}	
     },
-    '2つpush': {
+    '2つpushしている時': {
  	topic: function(s) {
 	    var s = new stack();
 	    s.push(1);
 	    s.push(3);
 	    return s;
 	},
-	'pop 1つめ': function(s) {
+	'pop 1つできる': function(s) {
 	    assert.equal(s.pop(), 3);
 	    assert.equal(s.size(), 1);
 	    assert.isFalse(s.isEmpty());
 	},
-	'pop 2つめ': function(s) {
+	'pop 2つできる': function(s) {
 	    assert.equal(s.pop(), 1);
 	    assert.equal(s.size(), 0);
 	    assert.isTrue(s.isEmpty());
+	},
+	'pop 3つめは例外発生':function(s) {
+	    assert.throws(function () { s.pop(); }, RangeError);
 	}
     },
     'maxSize制限': {
